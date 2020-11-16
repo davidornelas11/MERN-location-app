@@ -10,13 +10,13 @@ app.use(express.urlencoded({ extended: false }))
 app.use(express.json())
 
 // Database Error / Disconnection
-mongoose.connect.on('error', err => console.log(err.message + 'is Mongod not running?'))
-mongoose.MongooseDocument.connect.on('disconnected', () =>
+mongoose.connection.on('error', err => console.log(err.message + 'is Mongod not running?'))
+mongoose.connection.on('disconnected', () =>
 console.log('mongo disconnected'))
 
 // Database Connection Successful
 mongoose.connect('mongodb://localhost:27017/mencrud', { userNewUrlParser: true})
-mongoose.MongooseDocument.connection.once('open', ()=> {
+mongoose.connection.once('open', ()=> {
     console.log('connected to mongoose!')
 })
 
