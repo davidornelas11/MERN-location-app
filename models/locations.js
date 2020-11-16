@@ -7,4 +7,4 @@ const locationSchema = mongoose.Schema({
 
 })
 
-module.exports('Location', locationSchema)
+module.exports = mongoose.model('Location', locationSchema)
