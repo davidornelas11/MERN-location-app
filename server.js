@@ -21,8 +21,8 @@ mongoose.MongooseDocument.connection.once('open', ()=> {
 })
 
 //Controllers and Routes
-const locationController = require('./controllers/locations.js')
-app.use('/locations.js', locationsController)
+const locationsController = require('./controllers/locations')
+app.use('/locations', locationsController)
 
 
 app.listen(PORT, () => {
