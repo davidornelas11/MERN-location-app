@@ -21,7 +21,7 @@ mongoose.connection.once('open', ()=> {
 })
 
 //Controllers and Routes
-const locationsController = require('./controllers/locations.js')
+const locationsController = require('./controllers/locations')
 app.use('/locations', locationsController)
 
 
