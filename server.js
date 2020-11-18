@@ -16,7 +16,6 @@ mongoose.connect(connection,{ useNewUrlParser: true, useUnifiedTopology: true, u
     .catch(err => console.log(err));)
 
 // Database Connection Successful
-mongoose.connect('mongodb://localhost:27017/mencrud', { userNewUrlParser: true})
 mongoose.connection.once('open', ()=> {
     console.log('connected to mongoose!')
 })
