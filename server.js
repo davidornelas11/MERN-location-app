@@ -23,7 +23,8 @@ mongoose.connection.once('open', ()=> {
 //Controllers and Routes
 const locationsController = require('./controllers/locations')
 app.use('/locations', locationsController)
-
+const usersController = require('./controllers/users')
+app.use('/users', usersController)
 
 app.listen(PORT, () => {
     console.log('listening on port' + PORT)
