@@ -13,7 +13,7 @@ app.use(express.json())
 // Database Error / Disconnection
 mongoose.connect(connection,{ useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false})
     .then(() => console.log("Database Connected Successfully"))
-    .catch(err => console.log(err));)
+    .catch(err => console.log(err));
 
 // Database Connection Successful
 mongoose.connection.once('open', ()=> {
