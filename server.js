@@ -1,5 +1,6 @@
 const express = require('express')
 const mongoose = require('mongoose')
+const connection = "mongodb+srv://davidornelas:Project3^^^@cluster0.ypzc4.mongodb.net/mern-location-api?retryWrites=true&w=majority";
 const PORT = process.env.PORT || 3001
 const app = express()
 const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017' + 'MERN-location-app'
@@ -10,9 +11,9 @@ app.use(express.urlencoded({ extended: false }))
 app.use(express.json())
 
 // Database Error / Disconnection
-mongoose.connection.on('error', err => console.log(err.message + 'is Mongod not running?'))
-mongoose.connection.on('disconnected', () =>
-console.log('mongo disconnected'))
+mongoose.connect(connection,{ useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false})
+    .then(() => console.log("Database Connected Successfully"))
+    .catch(err => console.log(err));)
 
 // Database Connection Successful
 mongoose.connect('mongodb://localhost:27017/mencrud', { userNewUrlParser: true})
