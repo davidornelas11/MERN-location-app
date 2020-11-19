@@ -1,5 +1,6 @@
 const express = require('express')
 const mongoose = require('mongoose')
+const connection = "mongodb+srv://davidornelas:Project3^^^@cluster0.ypzc4.mongodb.net/mern-location-api?retryWrites=true&w=majority";
 const PORT = process.env.PORT || 3001
 const app = express()
 const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017' + 'MERN-location-app'
@@ -24,12 +25,11 @@ const corsOptions = {
 app.use(cors(corsOptions))
 
 // Database Error / Disconnection
-mongoose.connection.on('error', err => console.log(err.message + 'is Mongod not running?'))
-mongoose.connection.on('disconnected', () =>
-console.log('mongo disconnected'))
+mongoose.connect(connection,{ useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false})
+    .then(() => console.log("Database Connected Successfully"))
+    .catch(err => console.log(err));
 
 // Database Connection Successful
-mongoose.connect('mongodb://localhost:27017/mencrud', { userNewUrlParser: true})
 mongoose.connection.once('open', ()=> {
     console.log('connected to mongoose!')
 })
@@ -37,7 +37,8 @@ mongoose.connection.once('open', ()=> {
 //Controllers and Routes
 const locationsController = require('./controllers/locations')
 app.use('/locations', locationsController)
-
+const usersController = require('./controllers/users')
+app.use('/users', usersController)
 
 app.listen(PORT, () => {
     console.log('listening on port' + PORT)
