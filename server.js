@@ -4,11 +4,25 @@ const connection = "mongodb+srv://davidornelas:Project3^^^@cluster0.ypzc4.mongod
 const PORT = process.env.PORT || 3001
 const app = express()
 const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017' + 'MERN-location-app'
+const cors = require('cors')
 app.use(express.urlencoded({ extended: false }))
 
 
 //middleware
 app.use(express.json())
+
+const whitelist = ['http://localhost:3000', 'http://localhost:3001', 'https://destinations-api-project3.herokuapp.com/users', 'https://destinations-api-project3.herokuapp.com/locations', 'https://destinations-api-project3.herokuapp.com']
+const corsOptions = {
+  origin: function (origin, callback) {
+    if (whitelist.includes(origin)) {
+      callback(null, true)
+    } else {
+      callback(new Error('Not allowed by CORS'))
+    }
+  }
+}
+
+app.use(cors(corsOptions))
 
 // Database Error / Disconnection
 mongoose.connect(connection,{ useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false})
