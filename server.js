@@ -1,7 +1,7 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const connection =
-  MONGODB_URI ;
+"mongodb+srv://davidornelas:Project3^^^@cluster0.ypzc4.mongodb.net/mern-location-api?retryWrites=true&w=majority" ;
 const PORT = process.env.PORT || 3001;
 const app = express();
 const MONGODB_URI =
