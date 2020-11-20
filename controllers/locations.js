@@ -2,6 +2,13 @@ const express = require('express');
 const locations = express.Router();
 const Location = require('../models/locations.js');
 
+//API Routes
+
+
+
+
+
+
 //Routes
 
 
