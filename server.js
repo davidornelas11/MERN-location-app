@@ -11,7 +11,7 @@ app.use(express.urlencoded({ extended: false }))
 //middleware
 app.use(express.json())
 
-const whitelist = ['http://localhost:3000', 'http://localhost:3001', 'https://destinations-api-project3.herokuapp.com/users', 'https://destinations-api-project3.herokuapp.com/locations', 'https://destinations-api-project3.herokuapp.com']
+const whitelist = ['http://localhost:3000', 'http://localhost:3001', 'http://localhost:3002', 'https://destinations-api-project3.herokuapp.com/users', 'https://destinations-api-project3.herokuapp.com/locations', 'https://destinations-api-project3.herokuapp.com']
 const corsOptions = {
   origin: function (origin, callback) {
     if (whitelist.includes(origin)) {

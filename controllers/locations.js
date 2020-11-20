@@ -41,10 +41,12 @@ locations.put('/:id', (req, res) => {
 //Delete Route
 locations.delete('/:id', (req, res) => {
       Location.findByIdAndRemove(req.params.id, (err, deletedLocation) => {
-            if (err)
+            if (err) { 
             res.status(400).json({error: err.message})
+            }
+            res.status(200).json(deletedLocation)
       })
-      res.status(200).json(deletedLocation)
+      
 })
 
 
