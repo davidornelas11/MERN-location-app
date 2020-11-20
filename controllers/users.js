@@ -26,11 +26,12 @@ users.put('/:id', (req, res) => {
 
 //Delete Route
 users.delete('/:id', (req, res) => {
-    User.findByIdAndRemove(req.params.id, (err, deletedLocation) => {
-          if (err)
+    User.findByIdAndRemove(req.params.id, (err, deletedUser) => {
+          if (err) {
           res.status(400).json({error: err.message})
-    })
-    res.status(200).json(deletedLocation)
+    }
+    res.status(200).json(deletedUser)
+})
 })
 
 
