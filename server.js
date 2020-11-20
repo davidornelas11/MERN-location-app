@@ -7,6 +7,7 @@ const app = express();
 const MONGODB_URI =
   process.env.MONGODB_URI || "mongodb://localhost:27017" + "MERN-location-app";
 const cors = require("cors");
+
 app.use(express.urlencoded({ extended: false }));
 
 //middleware
