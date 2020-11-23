@@ -14,6 +14,18 @@ locations.get("/", (req, res) => {
   });
 });
 
+// Show unique location
+locations.get("/:id", (req, res) => {
+      Location.findById(req.params.id, (err, foundLocation) => {
+        if (err) {
+          res.status(400).json({ error: err.message });
+        }
+        res.status(200).json(foundLocation);
+      });
+    });
+
+
+
 //Create Route
 locations.post("/", async (req, res) => {
   Location.create(req.body, (error, createdLocation) => {
@@ -40,11 +52,16 @@ locations.put("/:id", (req, res) => {
 });
 
 //Delete Route
-locations.delete("/:id", (req, res) => {
-  Location.findByIdAndRemove(req.params.id, (err, deletedLocation) => {
-    if (err) res.status(400).json({ error: err.message });
-  });
-  res.status(200).json(deletedLocation);
-});
+locations.delete('/:id', (req, res) => {
+      Location.findByIdAndRemove(req.params.id, (err, deletedLocation) => {
+            if (err) {
+            res.status(400).json({error: err.message})
+            }
+      res.status(200).json(deletedLocation)
+      })
+      
+})
+
+
 
 module.exports = locations;
