@@ -1,38 +1,53 @@
 const express = require("express");
 const users = express.Router();
 const User = require("../models/user.js");
+const bcrypt = require("bcryptjs")
+const config = require("config")
+const jwt = require("jsonwebtoken")
 
 //Create Route
 users.post("/", async (req, res) => {
-  User.create(req.body, (error, createdLocation) => {
-    if (error) {
-      res.status(400).json({ error: error.message });
-    }
-    res.status(200).json(createdLocation);
+  const {username, password} = req.body;
+
+  if(!username || !password) {
+    return res.status(400).json({ msg: 'Please complete all fields' });
+  }
+
+  User.findOne({username})
+  .then(user => {
+    if(user) return res.status(400).json({ msg: 'User exists'});
+
+    const newUser = new User({
+      username,
+      password
+    });
+
+    bcrypt.genSalt(10, (err, salt) => {
+    bcrypt.hash(newUser.password, salt, (err, hash) => {
+      if(err) throw err;
+      newUser.password = hash;
+      newUser.save()
+      .then(user => {
+        jwt.sign(
+          {id: user.id},
+          config.get('jwtSecret'),
+          (err, token) => {
+            if(err) throw err;
+            res.json({
+              token,
+                user: {
+                id: user.id,
+                username: user.username
+              }
+            });
+          }
+        )
+      });
+    });
   });
 });
+})
 
-//Update Route
-users.put("/:id", (req, res) => {
-  User.findByIdAndUpdate(
-    req.params.id,
-    req.body,
-    { new: true },
-    (err, updatedLocation) => {
-      if (err) {
-        res.status(400).json({ error: err.message });
-      }
-      res.status(200).json(updatedLocation);
-    }
-  );
-});
 
-//Delete Route
-users.delete("/:id", (req, res) => {
-  User.findByIdAndRemove(req.params.id, (err, deletedLocation) => {
-    if (err) res.status(400).json({ error: err.message });
-  });
-  res.status(200).json(deletedLocation);
-});
 
 module.exports = users;

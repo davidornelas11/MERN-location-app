@@ -1,13 +1,13 @@
 const express = require("express");
 const mongoose = require("mongoose");
-const connection =
-  "mongodb+srv://davidornelas:Project3^^^@cluster0.ypzc4.mongodb.net/mern-location-api?retryWrites=true&w=majority";
+const connection = "mongodb+srv://davidornelas:Project3^^^@cluster0.ypzc4.mongodb.net/mern-location-api?retryWrites=true&w=majority";
 const PORT = process.env.PORT || 3001;
 const app = express();
-const MONGODB_URI =
-  process.env.MONGODB_URI || "mongodb://localhost:27017" + "MERN-location-app";
+const MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost:27017" + "MERN-location-app";
 const cors = require("cors");
 app.use(express.urlencoded({ extended: false }));
+
+const config = require("config")
 
 //middleware
 app.use(express.json());
@@ -15,6 +15,8 @@ app.use(express.json());
 const whitelist = [
   "http://localhost:3000",
   "http://localhost:3001",
+  "http://localhost:3001/users",
+  "http://localhost:3001/locations",
   "https://destinations-api-project3.herokuapp.com/users",
   "https://destinations-api-project3.herokuapp.com/locations",
   "https://destinations-api-project3.herokuapp.com",
@@ -29,7 +31,7 @@ const corsOptions = {
   },
 };
 
-app.use(cors(corsOptions));
+app.use(cors());
 
 // Database Error / Disconnection
 mongoose
@@ -49,9 +51,14 @@ mongoose.connection.once("open", () => {
 //Controllers and Routes
 const locationsController = require("./controllers/locations");
 app.use("/locations", locationsController);
+
 const usersController = require("./controllers/users");
 app.use("/users", usersController);
 
+const authenticationController = require("./controllers/authentication");
+app.use("/authentication", authenticationController);
+
+
 app.listen(PORT, () => {
-  console.log("listening on port" + PORT);
+  console.log("backend listening on port " + PORT);
 });
